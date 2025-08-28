@@ -1,6 +1,5 @@
 # --- Dependency Directories ---
 node_modules/
 # --- Environment Files ---
-.env
 temp
 tmp

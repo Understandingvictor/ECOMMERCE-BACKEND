@@ -5,17 +5,13 @@ import {
   adminViewOrders,
   customersViewOrders,
   updateOrderStatus,
-  customersViewCart,
-  adminViewCart,
 } from "../controllers/orders.controller.js";
 
 const route = express.Router();
 
 
-route.get("/adminViewOrders", verifyUser, isAdmin,  adminViewOrders);
-route.get("/customersViewCart", verifyUser, customersViewCart);
-route.get("/adminViewCart", verifyUser, isAdmin, adminViewCart);
-route.get("/customersViewOrders", verifyUser, customersViewOrders);
-route.post("/updateOrderStatus", verifyUser, isAdmin, updateOrderStatus);
+route.get("/adminViewOrders", verifyUser, isAdmin,  adminViewOrders); //only admin views order. must be logged in 
+route.get("/customersViewOrders", verifyUser, customersViewOrders); //only customers view orders. must be logged in
+route.post("/updateOrderStatus", verifyUser, isAdmin, updateOrderStatus);//only admin updates status.must be logged in
 
 export default route;

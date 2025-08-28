@@ -4,7 +4,7 @@ import {hashPassword} from "../helpers/passwordHashing.helper.js";
 const createUser = async(req, res, next)=>{
     try {
         const payload = req.body;
-        if (!payload.email && !payload.password) {
+        if (!payload.email || !payload.password) {
           throw new Error("enter email and password");
         }
         const existingUser = await userModel.findOne({
@@ -15,7 +15,7 @@ const createUser = async(req, res, next)=>{
         }
         const hashedPassword = hashPassword(payload.password);
         payload['password'] = hashedPassword; //modified payload
-        const newUser = await (new userModel(payload)).save();
+        const newUser = await (new userModel({email:payload.email, password:payload.password})).save();
 
         return res.json({message:'created successfully', newUser:newUser});
     } catch (error) {
