@@ -29,7 +29,7 @@ const login = async (req, res, next) => {
 
     //check if the person logging in has cart as guest
     if (guestId) {
-      await guestChecking(guestId, res, payload);
+      await guestChecking(guestId, res, payload, token);
     }
     return res
       .cookie("token", token, {

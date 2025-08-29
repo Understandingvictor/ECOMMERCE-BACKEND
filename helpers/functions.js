@@ -57,7 +57,7 @@ const cartTotalAmount = async (userId, whichUser) => {
 }
 
 //fucntion that runs when the loggged in user has added to cart before logging in in the login controller
-const guestChecking = async (guestId, res, payload) => {
+const guestChecking = async (guestId, res, payload, token) => {
   try {
     /*check if the person making order is guest
             takes the guest cart and creates a new cart for the logged in user
@@ -148,7 +148,6 @@ const guestChecking = async (guestId, res, payload) => {
       user: guestId,
     });
     res.clearCookie("guestId", {
-      maxAge: 1200000 * 24,
       secure: true,
       httpOnly: true,
       sameSite: "strict",
@@ -156,7 +155,6 @@ const guestChecking = async (guestId, res, payload) => {
   } catch (error) {
     throw error; //hope this is correct
   }
-        
-}
+};
 
 export { getUserId, guestChecking, cartTotalAmount };

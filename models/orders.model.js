@@ -18,6 +18,10 @@ const orderSchema = new mongoose.Schema({
             }
         }
     ],
+    totalAmount: {
+        type:Number
+    },
+    
     status:{
         type:String,
         enum:['pending', 'delivered'],

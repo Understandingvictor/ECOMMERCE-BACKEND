@@ -188,7 +188,7 @@ PRODUCT MANAGEMENT ENPOINT
 
 
 
-CART ENDPOINT - the admin views all carts the customers view thier cart
+CART ENDPOINT - the admin views all carts the customers view thier cart and be able to remove products from cart
 ...........................................................
     admin only must be logged in to view cart, customers can be guest or regular users (customers);
 
@@ -228,6 +228,23 @@ CART ENDPOINT - the admin views all carts the customers view thier cart
     {
         carts: carts,
         message: ` ${carts.length} fetched successfully `,
+    }
+
+    CUSTOMERS REMOVING FROM CART
+    endpoint -/removeProductFromCart/:productId //replace productId with actuall product id
+    type - DELETE
+    NB: user could be a gues or a registered user(customer)
+
+    returns
+
+    if guest,
+    {
+       message: "Removed from cart"
+    }
+    
+    registered user,
+    { 
+        message: "Removed from cart" 
     }
 
 

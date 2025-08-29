@@ -5,6 +5,7 @@ import { orderModel } from "../models/orders.model.js";
 import { guestCartModel } from "../models/guestCartModel.js";
 import { cloudinaryUploader } from "../helpers/cloudinary.helper.js";
 import { getUserId } from "../helpers/functions.js";
+import { cartTotalAmount } from "../helpers/functions.js";
 import crypto from "crypto";
 import fs from "fs/promises";
 
@@ -215,7 +216,7 @@ const addToCart = async (req, res, next) => {
           return res.json({cart: updatedCart, message: "added quantity successfully"});
         }
 
-        //updating the current users cart if the product doesnt exist
+        //updating the guest users cart if the product doesnt exist
         const updatedCart = await guestCartModel.findByIdAndUpdate(
           cart.id,
           { $push: { items: { product: productId, quantity: quantity } } },
@@ -249,6 +250,7 @@ const makeOrder = async (req, res, next) => {
     if (!userCart) {
       throw new Error("no cart cart found pls add to cart");
     }
+    const orderTotalAmount = await cartTotalAmount(userID.userId, "mainUser"); //getting the amount of what user ordered
     for (let item of userCart.items) {
       itemArrays.push(item);
     }
@@ -257,6 +259,7 @@ const makeOrder = async (req, res, next) => {
     const newOrder = await new orderModel({
       user: userID.userId,
       items: [...userCart.items],
+      totalAmount:orderTotalAmount
     }).save();
 
     //updated user
